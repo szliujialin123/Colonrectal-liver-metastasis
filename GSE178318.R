@@ -1,43 +1,3 @@
-rm(list = ls())
-setwd(dir = "D:/Projects/Bioinformatics/ZColorectal_liver_metastasis/GSE178318/")
-
-library(Seurat)
-
-# scRNA <- CreateSeuratObject(counts = Read10X("Data/"), min.cells = 3, min.features = 200)
-# 
-# scRNA$orig.ident <- substring(colnames(scRNA), first = 18, last = 26)
-# 
-# scRNA <- subset(scRNA, orig.ident %in% grep(paste("CRC", "LM", sep = "|"), names(table(scRNA$orig.ident)), value = T))
-#  
-# save(scRNA, file = "scRNA_CRCorLM.Rdata")
-
-#################################Preprocessing##################################
-# 
-# load(file = "scRNA_CRCorLM.Rdata")
-# 
-# CRC.list <- SplitObject(scRNA, split.by = "orig.ident")
-# 
-# setwd(dir = "D:/Projects/Bioinformatics/ZColorectal_liver_metastasis/GSE178318/Preprocessing/")
-# 
-# CRC.list <- lapply(CRC.list, FUN = function(x) {
-#   x[["percent.mt"]] <- PercentageFeatureSet(x, pattern = "^MT-")
-#   png(filename = paste(names(table(x$orig.ident)), ".png", sep = ""), width = 2000, height = 1000, res = 300)
-#   print(VlnPlot(x, features = c("nFeature_RNA", "nCount_RNA", "percent.mt"), ncol = 3, pt.size = 0))
-#   dev.off()
-# 
-#   meanUMI <- mean(unlist(x[["nCount_RNA"]]))
-#   stdUMI <- sd(unlist(x[["nCount_RNA"]]))
-#   nCount_RNAThreshold <- meanUMI + 3*stdUMI
-#   retain <- which((x[["percent.mt"]] < 15) &
-#                     (x[["nFeature_RNA"]] > 500) &
-#                     (x[["nCount_RNA"]] < nCount_RNAThreshold))
-# 
-#   x <- x[,retain]
-#   return(x)
-# })
-# 
-# save(CRC.list, file = "Preprocessed_scRNA.Rdata")
-
 ##################Batch effect detection and data integration###################
 # library(dplyr)
 # library(Seurat)
@@ -356,7 +316,7 @@ for (i in levels(All.data@active.ident)) {
 DiffMastAll <- FindMarkers(All.data, ident.1 = "LM Mast cells", ident.2 = "CRC Mast cells", logfc.threshold = 0)
 DiffNKAll <- FindMarkers(All.data, ident.1 = "LM NK cells", ident.2 = "CRC NK cells", logfc.threshold = 0)
 
-# Genome-wide gene expression profiling of human mast cells stimulated by IgE or Fc¦ÅRI-aggregation reveals a complex network of genes involved in inflammatory responses
+# Genome-wide gene expression profiling of human mast cells stimulated by IgE or FcÂ¦Ã…RI-aggregation reveals a complex network of genes involved in inflammatory responses
 DiffMast <- DiffMastAll[rownames(DiffMastAll) %in% c("CCL4", "CXCL1", "CCL7",
                                    "CXCL3", "CCL5", "CCRL2",
                                    "IL8", "BL34", "LIF", "BL34",
